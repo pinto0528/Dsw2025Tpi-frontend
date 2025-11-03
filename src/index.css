@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    @apply m-0 text-[2rem] h-[100dvh] sm:text-base;
+    @apply m-0 text-[1.5rem] sm:text-[1.5rem] md:text-lg lg:text-xl xl:text-2xl;
   }
   #root {
     @apply h-[100dvh];
