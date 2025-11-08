@@ -4,9 +4,7 @@ function Button({ children, type = 'button', ...restProps }) {
   }
 
   return (
-    <button className="
-     border-gray-100 border-solid border bg-gray-300 p-1 cursor-pointer rounded-md shadow
-    "
+    <button
     type={type} {...restProps}>{children}</button>
   );
 };

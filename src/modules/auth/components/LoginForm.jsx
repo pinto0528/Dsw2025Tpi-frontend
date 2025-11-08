@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import Input from './Input';
-import Button from './Button';
+import Button from './LoginButton';
 import { useState } from 'react';
 import { login } from '../services/login';
 

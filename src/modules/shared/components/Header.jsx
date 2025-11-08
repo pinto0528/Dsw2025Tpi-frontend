@@ -7,13 +7,13 @@ const Header = ({ onMenuClick }) => {
     <div
       className="
         h-[70px] min-h-[70px]
-        bg-gray-400 text-black p-3 text-md font-bold
+        bg-gray-100 text-black p-3 text-md font-bold
         shadow-lg mb-1.5
         flex-shrink-0
       "
     >
       <div className="flex">
-        <div className="block md:hidden">
+        <div className="block md:hidden mr-4">
           <MenuButton onClick={onMenuClick} />
         </div>
         <h1 className="text-3xl mt-1">Header</h1>
