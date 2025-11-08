@@ -6,7 +6,7 @@ const Sidebar = ({ isOpen }) => {
   // Esta función determinará las clases
   const getLinkClassName = ({ isActive }) => {
     return `
-      ${isActive ? 'bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold pl-10 p-3' : ''}
+      ${isActive ? 'bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold px-8 p-3' : ''}
     `;
   };
 
@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen }) => {
         flex-col
         ${isOpen ? "flex" : "hidden"}
         md:flex
-        w-64 md:w-[15dvw] min-w-[120px]
+        w-64 md:w-[15dvw] min-w-[180px]
         h-[calc(100vh-80px)] md:h-auto
         bg-gray-100 p-4 text-black
         shadow-lg rounded-t-lg
@@ -28,19 +28,17 @@ const Sidebar = ({ isOpen }) => {
         className="
           flex-1
           flex-col
-          space-y-2 /* Añadido para espaciar los links */
+          space-y-1
+          items-center
         "
       >
-        {/* 1. Usamos la función 'getLinkClassName' en la prop 'className'.
-          2. Añadimos la prop 'end' al NavLink de "/admin".
-        */}
         
         <NavLink
           to="/admin"
-          end // <-- IMPORTANTE
+          end
           className={getLinkClassName}
         >
-          Admin
+          Principal
         </NavLink>
         
         <NavLink
@@ -56,9 +54,16 @@ const Sidebar = ({ isOpen }) => {
         >
           Orders
         </NavLink>
+
+        <hr className="
+        my-5 
+        mx-5
+        border-none
+        bg-gray-300
+        h-0.5" />
       </div>
 
-      <div>
+      <div className="md:hidden">
         <ButtonShared>Cerrar Sesion</ButtonShared>
       </div>
     </div>

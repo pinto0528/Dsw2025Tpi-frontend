@@ -1,5 +1,6 @@
 import React from "react";
 import MenuButton from "./MenuButton";
+import ButtonShared from "./ButtonShared";
 
 // 1. Acepta 'onMenuClick' como prop
 const Header = ({ onMenuClick }) => {
@@ -17,6 +18,9 @@ const Header = ({ onMenuClick }) => {
           <MenuButton onClick={onMenuClick} />
         </div>
         <h1 className="text-3xl mt-1">Header</h1>
+        <div className="hidden md:flex md:ml-auto">
+          <ButtonShared className="mr-3 px-8">Cerrar Sesion</ButtonShared>
+        </div>
       </div>
     </div>
   );

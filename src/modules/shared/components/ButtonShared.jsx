@@ -1,5 +1,5 @@
 const ButtonShared = ({ children, ...restProps }) => (
-  <button className="" { ...restProps }>
+  <button className="" {...restProps}>
     {children}
   </button>
 );
