@@ -55,7 +55,7 @@ function RegisterForm() {
         gap-3
         bg-white
         p-8
-        min-w-[400px]
+        min-w-[80dvw]
         max-h-[600px]
         sm:w-md
         sm:gap-4

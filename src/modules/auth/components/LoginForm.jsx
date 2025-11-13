@@ -41,9 +41,10 @@ function LoginForm() {
       className="
         flex
         flex-col
-        gap-20
+        gap-2
         bg-white
         p-8
+        min-w-[80dvw]
         sm:w-md
         sm:gap-4
         sm:rounded-lg
