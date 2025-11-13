@@ -1,16 +1,18 @@
-import { useForm } from 'react-hook-form';
-import Input from './Input';
-import Button from './LoginButton';
-import { useState } from 'react';
-import { login } from '../services/login';
+import { useForm } from "react-hook-form";
+import InputShared from "../../shared/components/InputShared";
+import ButtonShared from "../../shared/components/ButtonShared";
+import { useState } from "react";
+import { login } from "../services/login";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: { username: '', password: '' } });
+  } = useForm({ defaultValues: { username: "", password: "" } });
 
   const onValid = async (formData) => {
     try {
@@ -23,15 +25,20 @@ function LoginForm() {
       }
 
       console.log(data);
-
     } catch (error) {
       console.error(error);
-      setErrorMessage('Llame a soporte');
+      setErrorMessage("Llame a soporte");
     }
   };
 
+  const navigate = useNavigate();
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
   return (
-    <form className='
+    <form
+      className="
         flex
         flex-col
         gap-20
@@ -41,29 +48,48 @@ function LoginForm() {
         sm:gap-4
         sm:rounded-lg
         sm:shadow-lg
-      '
-    onSubmit={handleSubmit(onValid)}
+      "
+      onSubmit={handleSubmit(onValid)}
     >
-      <Input
-        label='Usuario'
-        { ...register('username', {
-          required: 'Usuario es obligatorio',
-        }) }
+      <p
+        className="
+        text-2xl
+        font-bold
+        pb-2
+    
+    "
+      >
+        Iniciar Sesión
+      </p>
+
+      <InputShared
+        label="Usuario"
+        {...register("username", {
+          required: "Usuario es obligatorio",
+        })}
         error={errors.username?.message}
       />
-      <Input
-        label='Contraseña'
-        { ...register('password', {
-          required: 'Contraseña es obligatorio',
-        }) }
-        type='password'
+      <InputShared
+        label="Contraseña"
+        {...register("password", {
+          required: "Contraseña es obligatorio",
+        })}
+        type="password"
         error={errors.password?.message}
       />
 
-      <Button type='submit'>Iniciar Sesión</Button>
-      {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+      <ButtonShared type="submit">Iniciar Sesión</ButtonShared>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
+      <ButtonShared
+        type="button"
+        className="bg-gray-200 hover:bg-gray-300 text-gray-800"
+        onClick={handleRegister}
+      >
+        Registro
+      </ButtonShared>
     </form>
   );
-};
+}
 
 export default LoginForm;

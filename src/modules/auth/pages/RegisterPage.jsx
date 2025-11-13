@@ -1,8 +1,8 @@
 import { useState } from "react";
-import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 import Modal from "../../shared/components/Modal";
 
-function LoginPage() {
+function RegisterPage() {
   // Estado para controlar la visibilidad del modal
   const [isModalOpen, setIsModalOpen] = useState(true);
 
@@ -17,10 +17,10 @@ function LoginPage() {
     >
       {/* Renderiza el Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <LoginForm />
+        <RegisterForm />
       </Modal>
     </div>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;
