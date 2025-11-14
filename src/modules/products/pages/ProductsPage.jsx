@@ -1,3 +1,5 @@
+import SearchBar from "../../shared/components/SearchBar"
+
 const ProductsPage = () => {
   return (
     <div className="flex flex-col flex-1">
@@ -11,7 +13,8 @@ const ProductsPage = () => {
         p-4
       "
       >
-        Buscador
+        <h1 className="text-2xl font-bold">Productos</h1>
+        <SearchBar/>
       </div>
       <div
         className="
