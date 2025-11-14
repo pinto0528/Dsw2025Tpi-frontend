@@ -6,7 +6,11 @@ const Sidebar = ({ isOpen }) => {
   // Esta función determinará las clases
   const getLinkClassName = ({ isActive }) => {
     return `
-      ${isActive ? 'bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold px-8 p-3' : ''}
+      ${
+        isActive
+          ? "bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold px-8 p-3"
+          : ""
+      }
     `;
   };
 
@@ -33,35 +37,26 @@ const Sidebar = ({ isOpen }) => {
           items-center
         "
       >
-        
-        <NavLink
-          to="/admin"
-          end
-          className={getLinkClassName}
-        >
+        <NavLink to="/admin" end className={getLinkClassName}>
           Principal
         </NavLink>
-        
-        <NavLink
-          to="/admin/products"
-          className={getLinkClassName}
-        >
-          Products
-        </NavLink>
-        
-        <NavLink
-          to="/admin/categories"
-          className={getLinkClassName}
-        >
-          Orders
+
+        <NavLink to="/admin/products" className={getLinkClassName}>
+          Productos
         </NavLink>
 
-        <hr className="
+        <NavLink to="/admin/orders" className={getLinkClassName}>
+          Ordenes
+        </NavLink>
+
+        <hr
+          className="
         my-5 
         mx-5
         border-none
         bg-gray-300
-        h-0.5" />
+        h-0.5"
+        />
       </div>
 
       <div className="md:hidden">

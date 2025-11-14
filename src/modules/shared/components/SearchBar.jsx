@@ -20,8 +20,8 @@ const SearchBar = () => {
         <div
           className="
           flex flex-row
-          w-[50px]
-          h-[40px]
+          w-[38px]
+          h-[38px]
           ml-2
           "
         >
@@ -29,21 +29,24 @@ const SearchBar = () => {
         </div>
       </div>
 
-      <div className="
+      <div
+        className="
       w-full
-      ">
-        <select className="
+      "
+      >
+        <select
+          className="
         w-full
         border border-gray-300
         rounded-lg
         p-2
-        ">
-          <option value="">Estado de Producto</option>
+        "
+        >
+          <option value="todos">Estado</option>
+          <option value="todos">Todos</option>
           <option value="activo">Activo</option>
           <option value="inactivo">Inactivo</option>
           <option value="stockBajo">Stock Bajo</option>
-          <option value="todos">Todos</option>
-
         </select>
       </div>
     </div>
