@@ -44,11 +44,14 @@ function LoginForm() {
         gap-2
         bg-white
         p-8
-        min-w-[80dvw]
-        sm:w-md
-        sm:gap-4
-        sm:rounded-lg
-        sm:shadow-lg
+        rounded-lg
+        shadow-lg
+        min-w-[300px]
+        w-[100dvw]
+        sm:w-[70dvw]
+        md:w-[60dvw]
+        lg:w-[50dvw]
+        max-w-[600px]
       "
       onSubmit={handleSubmit(onValid)}
     >

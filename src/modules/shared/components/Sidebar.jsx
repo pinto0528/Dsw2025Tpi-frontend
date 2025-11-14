@@ -20,8 +20,9 @@ const Sidebar = ({ isOpen }) => {
         w-64 md:w-[15dvw] min-w-[180px]
         h-[calc(100vh-80px)] md:h-auto
         bg-gray-100 p-4 text-black
-        shadow-lg rounded-t-lg
+        shadow-lg rounded-t-lg rounded-b-lg
         overflow-auto
+        mb-2
       `}
     >
       <div

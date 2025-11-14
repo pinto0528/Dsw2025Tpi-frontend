@@ -3,7 +3,7 @@ import InputShared from "../../shared/components/InputShared";
 import ButtonShared from "../../shared/components/ButtonShared";
 import { useState } from "react";
 // Se asume que tienes un servicio de registro similar al de login
-import { registerUser } from "../services/register"; 
+import { registerUser } from "../services/register";
 
 function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,7 +36,6 @@ function RegisterForm() {
       }
 
       console.log(data);
-      
     } catch (error) {
       console.error(error);
       setErrorMessage("Error inesperado. Llame a soporte");
@@ -44,108 +43,110 @@ function RegisterForm() {
   };
 
   return (
-
     <div>
-
-
-    <form
-      className="
+      <form
+        className="
         flex
         flex-col
-        gap-3
+        gap-2
         bg-white
         p-8
-        min-w-[80dvw]
-        max-h-[600px]
-        sm:w-md
-        sm:gap-4
-        sm:rounded-lg
-        sm:shadow-lg
-      "
-      onSubmit={handleSubmit(onValid)}
-    >
+        rounded-lg
+        shadow-lg
+        min-w-[300px]
+        w-[100dvw]
+        sm:w-[70dvw]
+        md:w-[60dvw]
+        lg:w-[50dvw]
+        max-w-[600px]
         
-    <p className="
+      "
+        onSubmit={handleSubmit(onValid)}
+      >
+        <p
+          className="
         text-2xl
         font-bold
         pb-2
     
-    ">Registro de Usuario</p>
+    "
+        >
+          Registro de Usuario
+        </p>
 
-      <InputShared
-        label="Usuario"
-        {...register("username", {
-          required: "Usuario es obligatorio",
-        })}
-        error={errors.username?.message}
-      />
+        <InputShared
+          label="Usuario"
+          {...register("username", {
+            required: "Usuario es obligatorio",
+          })}
+          error={errors.username?.message}
+        />
 
-      <InputShared
-        label="Email"
-        type="email"
-        {...register("email", {
-          required: "Email es obligatorio",
-          pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: "Email no válido",
-          },
-        })}
-        error={errors.email?.message}
-      />
+        <InputShared
+          label="Email"
+          type="email"
+          {...register("email", {
+            required: "Email es obligatorio",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Email no válido",
+            },
+          })}
+          error={errors.email?.message}
+        />
 
-      {/* Como InputShared es solo para <input>, 
+        {/* Como InputShared es solo para <input>, 
         usamos un div y <select> nativos para el Role,
         replicando el estilo y manejo de error.
       */}
-      <div className="flex flex-col h-20">
-        <label>Role:</label>
-        <select
-          className={errors.role ? "border-red-400" : ""}
-          {...register("role", {
-            required: "Debe seleccionar un role",
+        <div className="flex flex-col h-20">
+          <label>Role:</label>
+          <select
+            className={errors.role ? "border-red-400" : ""}
+            {...register("role", {
+              required: "Debe seleccionar un role",
+            })}
+          >
+            <option value="">Seleccione una opción</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            {/* Agrega más roles si es necesario */}
+          </select>
+          {errors.role && (
+            <p className="text-red-500 text-base sm:text-xs">
+              {errors.role.message}
+            </p>
+          )}
+        </div>
+
+        <InputShared
+          label="Contraseña"
+          type="password"
+          {...register("password", {
+            required: "Contraseña es obligatoria",
+            minLength: {
+              value: 6,
+              message: "La contraseña debe tener al menos 6 caracteres",
+            },
           })}
-        >
-          <option value="">Seleccione una opción</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-          {/* Agrega más roles si es necesario */}
-        </select>
-        {errors.role && (
-          <p className="text-red-500 text-base sm:text-xs">
-            {errors.role.message}
-          </p>
-        )}
-      </div>
+          error={errors.password?.message}
+        />
 
-      <InputShared
-        label="Contraseña"
-        type="password"
-        {...register("password", {
-          required: "Contraseña es obligatoria",
-          minLength: {
-            value: 6,
-            message: "La contraseña debe tener al menos 6 caracteres",
-          },
-        })}
-        error={errors.password?.message}
-      />
+        <InputShared
+          label="Confirmar contraseña"
+          type="password"
+          {...register("confirmPassword", {
+            required: "Debe confirmar la contraseña",
+            validate: (value) =>
+              value === password || "Las contraseñas no coinciden",
+          })}
+          error={errors.confirmPassword?.message}
+        />
 
-      <InputShared
-        label="Confirmar contraseña"
-        type="password"
-        {...register("confirmPassword", {
-          required: "Debe confirmar la contraseña",
-          validate: (value) =>
-            value === password || "Las contraseñas no coinciden",
-        })}
-        error={errors.confirmPassword?.message}
-      />
+        <ButtonShared type="submit">Registrar</ButtonShared>
 
-      <ButtonShared type="submit">Registrar</ButtonShared>
-      
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-    </form>
-
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      </form>
     </div>
   );
 }
