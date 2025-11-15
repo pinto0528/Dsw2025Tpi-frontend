@@ -14,14 +14,12 @@ import InfoCard from "../../shared/components/InfoCardShared";
  */
 const ProductCard = ({ sku, name, stock, state }) => {
   // 1. Formatea los datos específicos del producto
-  const cardTitle = `${sku} - ${name}`;
+  const cardTitle = `SKU ${sku} - ${name}`;
   const cardSubtitle = `Stock: ${stock} - Estado: ${state}`;
 
-
   const handleViewProduct = () => {
-    console.log(`Viendo producto: ${sku}`);
+    console.log(`Viendo producto SKU: ${sku}`);
   };
-
 
   return (
     <InfoCard

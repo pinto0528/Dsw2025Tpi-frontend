@@ -4,20 +4,20 @@ import ProductCard from "../components/ProductCard";
 // --- Datos de Ejemplo ---
 const mockProducts = [
   {
-    sku: "SKU001",
+    sku: "001",
     name: "Nombre de Producto Uno",
     stock: 150,
     state: "Activo",
   },
-  { sku: "SKU002", name: "Nombre de Producto Dos", stock: 0, state: "Agotado" },
+  { sku: "002", name: "Nombre de Producto Dos", stock: 0, state: "Agotado" },
   {
-    sku: "SKU003",
+    sku: "003",
     name: "Nombre de Producto Tres",
     stock: 75,
     state: "Activo",
   },
   {
-    sku: "SKU004",
+    sku: "004",
     name: "Nombre de Producto Cuatro",
     stock: 20,
     state: "Poco Stock",
