@@ -9,8 +9,7 @@ const Header = ({ onMenuClick }) => {
       className="
         h-[70px] min-h-[70px]
         bg-gray-100 text-black p-3 text-md font-bold
-        shadow-lg mb-1.5
-        flex-shrink-0
+        mb-2
       "
     >
       <div className="flex">
