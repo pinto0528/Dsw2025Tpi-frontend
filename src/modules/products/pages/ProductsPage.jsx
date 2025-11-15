@@ -1,4 +1,28 @@
-import SearchBar from "../../shared/components/SearchBar"
+import SearchBar from "../../shared/components/SearchBar";
+import ProductCard from "../components/ProductCard";
+
+// --- Datos de Ejemplo ---
+const mockProducts = [
+  {
+    sku: "SKU001",
+    name: "Nombre de Producto Uno",
+    stock: 150,
+    state: "Activo",
+  },
+  { sku: "SKU002", name: "Nombre de Producto Dos", stock: 0, state: "Agotado" },
+  {
+    sku: "SKU003",
+    name: "Nombre de Producto Tres",
+    stock: 75,
+    state: "Activo",
+  },
+  {
+    sku: "SKU004",
+    name: "Nombre de Producto Cuatro",
+    stock: 20,
+    state: "Poco Stock",
+  },
+];
 
 const ProductsPage = () => {
   return (
@@ -14,30 +38,33 @@ const ProductsPage = () => {
       "
       >
         <h1 className="text-2xl font-bold">Productos</h1>
-        <SearchBar/>
+        <SearchBar />
       </div>
+
       <div
         className="
         flex
         flex-col
         flex-1
-        mb-2
         bg-gray-100
         rounded-lg
         p-4
+        shadow-sm
+        overflow-y-auto
+        mb-2
       "
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores eum
-        repellat, soluta molestias natus est ipsum rerum tempora explicabo quae.
-        Animi odit quisquam iste quo placeat, laborum, neque natus ut aspernatur
-        amet a? Ex, architecto officia molestiae, eum possimus beatae in, facere
-        reiciendis aspernatur porro expedita obcaecati veniam consectetur
-        officiis autem ea veritatis natus accusantium nesciunt excepturi. Saepe,
-        animi magnam. Mollitia vel qui, dolor non modi dolores voluptatum animi
-        reprehenderit recusandae vitae at nostrum numquam ipsum eligendi ullam
-        consequatur officiis. Consequuntur quia eius incidunt ea laboriosam,
-        doloremque nulla deserunt natus! Autem eos incidunt sint blanditiis
-        excepturi earum sed dolores perspiciatis!
+        <div className="flex flex-col space-y-3">
+          {mockProducts.map((product) => (
+            <ProductCard
+              key={product.sku}
+              sku={product.sku}
+              name={product.name}
+              stock={product.stock}
+              state={product.state}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
