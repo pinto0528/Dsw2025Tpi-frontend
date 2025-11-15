@@ -24,6 +24,14 @@ const mockProducts = [
   },
 ];
 
+const productSearchOptions = [
+  { value: "", label: "Estado" },
+  { value: "todos", label: "Todos" },
+  { value: "activo", label: "Activo" },
+  { value: "inactivo", label: "Inactivo" },
+  { value: "stockBajo", label: "Stock Bajo" },
+];
+
 const ProductsPage = () => {
   return (
     <div className="flex flex-col flex-1">
@@ -38,7 +46,10 @@ const ProductsPage = () => {
       "
       >
         <h1 className="text-2xl font-bold">Productos</h1>
-        <SearchBar />
+
+        <div className="">
+          <SearchBar mockOptions={productSearchOptions} />
+        </div>
       </div>
 
       <div
