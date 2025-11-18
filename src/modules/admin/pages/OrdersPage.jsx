@@ -1,4 +1,4 @@
-import SearchBar from "../../shared/components/SearchBar";
+import SearchBar from "../../shared/components/AdminSearchBar";
 import OrderCard from "../components/OrderCard";
 
 const mockOrders = [

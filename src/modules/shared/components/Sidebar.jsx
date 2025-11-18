@@ -3,15 +3,17 @@ import ButtonShared from "./ButtonShared";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => {
-  // Esta función determinará las clases
   const getLinkClassName = ({ isActive }) => {
-    return `
-      ${
-        isActive
-          ? "bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold px-8 p-3"
-          : ""
-      }
-    `;
+    return `${
+      isActive
+        ? "bg-blue-300 text-blue-800 hover:bg-blue-200 font-bold px-8 p-3"
+        : ""
+    }`;
+  };
+
+  const showNavLink = () => {
+    const isAdmin = false; //localStorage.getItem("role") === "admin";
+    return isAdmin ? true : false;
   };
 
   return (
@@ -37,17 +39,23 @@ const Sidebar = ({ isOpen }) => {
           items-center
         "
       >
-        <NavLink to="/admin" end className={getLinkClassName}>
-          Principal
-        </NavLink>
+        {showNavLink() && (
+          <NavLink to="/admin" end className={getLinkClassName}>
+            Principal
+          </NavLink>
+        )}
 
-        <NavLink to="/admin/products" className={getLinkClassName}>
-          Productos
-        </NavLink>
+        {showNavLink() && (
+          <NavLink to="/admin/products" className={getLinkClassName}>
+            Productos
+          </NavLink>
+        )}
 
-        <NavLink to="/admin/orders" className={getLinkClassName}>
-          Ordenes
-        </NavLink>
+        {showNavLink() && (
+          <NavLink to="/admin/orders" className={getLinkClassName}>
+            Productos
+          </NavLink>
+        )}
 
         <hr
           className="
@@ -57,6 +65,7 @@ const Sidebar = ({ isOpen }) => {
         bg-gray-300
         h-0.5"
         />
+        
       </div>
 
       <div className="md:hidden">
