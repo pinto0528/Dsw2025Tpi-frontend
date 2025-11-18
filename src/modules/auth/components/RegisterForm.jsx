@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import InputShared from "../../shared/components/InputShared";
-import ButtonShared from "../../shared/components/ButtonShared";
+import InputShared from "../../shared/components/atoms/InputShared";
+import ButtonShared from "../../shared/components/atoms/ButtonShared";
 import { useState } from "react";
 // Se asume que tienes un servicio de registro similar al de login
 import { registerUser } from "../services/register";

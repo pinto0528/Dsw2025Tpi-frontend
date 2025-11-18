@@ -1,6 +1,6 @@
 import { useState } from "react";
 import RegisterForm from "../components/RegisterForm";
-import Modal from "../../shared/components/Modal";
+import Modal from "../../shared/components/atoms/Modal";
 
 function RegisterPage() {
   // Estado para controlar la visibilidad del modal

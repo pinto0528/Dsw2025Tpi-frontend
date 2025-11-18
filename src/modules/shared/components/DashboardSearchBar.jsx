@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonShared from "./ButtonShared";
+import ButtonShared from "./atoms/ButtonShared";
 
 // 1. El componente ahora acepta 'mockOptions' como prop.
 //    Se asigna un array vacío por defecto '[]' para evitar errores si no se pasa.
@@ -22,25 +22,11 @@ const SearchBar = ({ mockOptions = [] }) => {
           />
         </div>
 
-        <div
-          className="
-                flex flex-row
-                w-[38px]
-                h-[38px]
-                ml-2
-                "
-        >
+        <div className=" flex flex-row w-[38px] h-[38px] ml-2">
           <ButtonShared className="">⌕</ButtonShared>
         </div>
       </div>
-      <div
-        className="
-                flex
-                w-full
-                sm:w-[20dvw]
-                h-11
-                "
-      >
+      <div className=" flex w-full sm:w-[20dvw] h-11">
         <select
           className="
                 flex

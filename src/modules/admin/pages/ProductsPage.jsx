@@ -1,4 +1,4 @@
-import SearchBar from "../../shared/components/AdminSearchBar";
+import SearchBar from "../../shared/components/DashboardSearchBar";
 import ProductCard from "../components/ProductCard";
 
 // --- Datos de Ejemplo ---

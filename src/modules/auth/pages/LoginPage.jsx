@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginForm from "../components/LoginForm";
-import Modal from "../../shared/components/Modal";
+import Modal from "../../shared/components/atoms/Modal";
 
 function LoginPage() {
   // Estado para controlar la visibilidad del modal

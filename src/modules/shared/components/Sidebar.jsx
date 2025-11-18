@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonShared from "./ButtonShared";
+import ButtonShared from "./atoms/ButtonShared";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => {
