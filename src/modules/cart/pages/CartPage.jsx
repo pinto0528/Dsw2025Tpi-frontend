@@ -1,5 +1,6 @@
 import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
 function CartPage() {
@@ -10,13 +11,16 @@ function CartPage() {
   };
 
   return (
-    <div>
-      <div>
-        <Header onMenuClick={toggleSidebar} />
-        <div className="flex flex-1 overflow-hidden">
-          <Sidebar isOpen={isSidebarOpen} />
+    <div className="flex flex-col h-screen">
+      <Header onMenuClick={toggleSidebar} />
+
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar isOpen={isSidebarOpen} />
+
+        {/* Content */}
+        <div className="flex flex-col flex-1 px-2">
+          <Outlet />
         </div>
-        CartPage
       </div>
     </div>
   );
