@@ -1,6 +1,6 @@
 import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
-import CartProductCard from "../../shared/components/Atoms/CartProductCard";
+import CartProductCard from "../components/CartProductCard";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import ButtonShared from "../../shared/components/atoms/ButtonShared";
@@ -14,34 +14,40 @@ function CartPage() {
 
   const mockProducts = [
     {
-      desc: "Nombre de Producto Uno",
-      quant: 150,
+      name: "Nombre de Producto Uno",
+      quantity: 150,
       price: 100,
+      subtotal: 0,
     },
     {
-      desc: "Nombre de Producto Dos",
-      quant: 0,
+      name: "Nombre de Producto Dos",
+      quantity: 0,
       price: 100,
+      subtotal: 0,
     },
     {
-      desc: "Nombre de Producto Tres",
-      quant: 75,
+      name: "Nombre de Producto Tres",
+      quantity: 75,
       price: 100,
+      subtotal: 0,
     },
     {
-      desc: "Nombre de Producto Cuatro",
-      quant: 20,
+      name: "Nombre de Producto Cuatro",
+      quantity: 20,
       price: 100,
+      subtotal: 0,
     },
     {
-      desc: "Nombre de Producto Cinco",
-      quant: 150,
+      name: "Nombre de Producto Cinco",
+      quantity: 150,
       price: 100,
+      subtotal: 0,
     },
     {
-      desc: "Nombre de Producto Seis",
-      quant: 0,
+      name: "Nombre de Producto Seis",
+      quantity: 0,
       price: 100,
+      subtotal: 0,
     },
   ];
 
@@ -57,12 +63,14 @@ function CartPage() {
               <h1 className="text-2xl font-bold">Carrito de Compras</h1>
             </div>
 
-            <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto">
+            <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto gap-1">
               {mockProducts.map((product) => (
                 <CartProductCard
-                  desc={product.desc}
-                  quant={product.quant}
+                  key={product.desc}
+                  name={product.name}
+                  quantity={product.quantity}
                   price={product.price}
+                  subtotal={product.price * product.quantity}
                 />
               ))}
             </div>
