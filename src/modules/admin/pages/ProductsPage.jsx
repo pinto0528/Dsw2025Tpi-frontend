@@ -39,10 +39,10 @@ const ProductsPage = () => {
         className="
         flex
         flex-col
-        mb-2
         bg-gray-100
         rounded-lg
         p-4
+        mb-2
       "
       >
         <h1 className="text-2xl font-bold">Productos</h1>
@@ -62,7 +62,6 @@ const ProductsPage = () => {
         p-4
         shadow-sm
         overflow-y-auto
-        mb-2
       "
       >
         <div className="flex flex-col space-y-3">

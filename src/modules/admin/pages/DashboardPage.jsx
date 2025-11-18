@@ -10,7 +10,6 @@ const DashboardPage = () => {
         p-4
         shadow-sm
         overflow-y-auto
-        mb-2
       "
     >
         

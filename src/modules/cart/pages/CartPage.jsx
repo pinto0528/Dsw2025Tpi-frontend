@@ -14,12 +14,23 @@ function CartPage() {
     <div className="flex flex-col h-screen">
       <Header onMenuClick={toggleSidebar} />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden pb-2">
         <Sidebar isOpen={isSidebarOpen} />
-
-        {/* Content */}
         <div className="flex flex-col flex-1 px-2">
-          <Outlet />
+          <div
+            className="
+            flex
+            flex-col
+            flex-1
+            bg-gray-100
+            rounded-lg
+            p-4
+            shadow-sm
+            overflow-y-auto
+        "
+          >
+            <h1>Cart Page</h1>
+          </div>
         </div>
       </div>
     </div>
