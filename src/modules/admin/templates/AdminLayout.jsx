@@ -16,7 +16,7 @@ function AdminLayout() {
     <div className="flex flex-col h-screen">
       <Header onMenuClick={toggleSidebar} />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden pb-2">
         <Sidebar isOpen={isSidebarOpen} />
 
         {/* Content */}

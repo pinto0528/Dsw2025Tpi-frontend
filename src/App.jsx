@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./modules/auth/pages/LoginPage";
 import AdminPage from "./modules/admin/pages/AdminPage";
 import RegisterPage from "./modules/auth/pages/RegisterPage";
+import CartPage from "./modules/cart/pages/CartPage";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
 
         {/* Rutas de administrador */}
         <Route path="/admin/*" element={<AdminPage />} />
+
+        <Route path="/cart/*" element={<CartPage />} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-import InfoCard from "../../shared/components/InfoCardShared";
+import InfoCard from "../../shared/components/Atoms/InfoCardShared";
 
 /**
  * @typedef {object} ProductCardProps

@@ -1,5 +1,5 @@
 import React from "react";
-import InfoCardShared from "../../shared/components/InfoCardShared";
+import InfoCardShared from "../../shared/components/Atoms/InfoCardShared";
 
 /**
  * @typedef {object} OrderCardProps
