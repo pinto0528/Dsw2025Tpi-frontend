@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./modules/main/pages/MainPage";
 import LoginPage from "./modules/auth/pages/LoginPage";
 import AdminPage from "./modules/admin/pages/AdminPage";
 import RegisterPage from "./modules/auth/pages/RegisterPage";
@@ -8,13 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta de login */}
-        <Route path="/" element={<LoginPage />} />
 
-        {/* Ruta de registro */}
+        <Route path="/" element={<MainPage />} />
+
+        <Route path="/login" element={<LoginPage />} />
+
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Rutas de administrador */}
         <Route path="/admin/*" element={<AdminPage />} />
 
         <Route path="/cart/*" element={<CartPage />} />
