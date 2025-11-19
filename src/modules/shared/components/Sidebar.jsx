@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonShared from "./atoms/ButtonShared";
+import ButtonShared from "./Atoms/ButtonShared";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => {
@@ -24,9 +24,9 @@ const Sidebar = ({ isOpen }) => {
   return (
     <div
       className={`
-        absolute md:relative flex flex-col
-        ${isOpen ? "flex" : "hidden"} md:flex
-        w-64 md:w-[15dvw] min-w-[180px] h-full
+        absolute lg:relative flex flex-col
+        ${isOpen ? "flex" : "hidden"} lg:flex
+        w-64 lg:w-[15dvw] min-w-[180px] h-[calc(100vh-85px)]
         bg-gray-100 p-4 text-black
         shadow-lg rounded-t-lg rounded-b-lg
         overflow-auto

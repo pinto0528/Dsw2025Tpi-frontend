@@ -4,6 +4,7 @@ import LoginPage from "./modules/auth/pages/LoginPage";
 import AdminPage from "./modules/admin/pages/AdminPage";
 import RegisterPage from "./modules/auth/pages/RegisterPage";
 import CartPage from "./modules/cart/pages/CartPage";
+import AccountPage from "./modules/account/pages/AccountPage";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/admin/*" element={<AdminPage />} />
 
         <Route path="/cart/*" element={<CartPage />} />
+
+        <Route path="/account/*" element={<AccountPage/>} />
 
       </Routes>
     </BrowserRouter>

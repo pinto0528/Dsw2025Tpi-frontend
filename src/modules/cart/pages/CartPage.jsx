@@ -3,11 +3,11 @@ import Sidebar from "../../shared/components/Sidebar";
 import CartProductCard from "../components/CartProductCard";
 import { Outlet } from "react-router-dom";
 import { useState, useMemo } from "react";
-import ButtonShared from "../../shared/components/atoms/ButtonShared";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 
 function CartPage() {
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -34,10 +34,7 @@ function CartPage() {
   ]);
 
   const handleDeleteProduct = (key) => {
-
-    const updatedProducts = products.filter(
-      (product) => product.key !== key
-    );
+    const updatedProducts = products.filter((product) => product.key !== key);
 
     setProducts(updatedProducts);
   };
@@ -81,7 +78,9 @@ function CartPage() {
               ))}
             </div>
             <div className="flex flex-row justify-between items-center bg-gray-100 rounded-b-lg p-4">
-              <span className="text-xl font-bold">Total: {total.toFixed(2)} </span>
+              <span className="text-xl font-bold">
+                Total: {total.toFixed(2)}{" "}
+              </span>
               <ButtonShared className="w-40">Finalizar Compra</ButtonShared>
             </div>
           </div>
