@@ -13,19 +13,15 @@ import InfoCard from "../../shared/components/Atoms/InfoCardShared";
  * Muestra una tarjeta de producto, usando InfoCard para la UI.
  * @param {CartProductCardProps} props
  */
-const ProductCard = ({ name, quantity, price, subtotal }) => {
-  // 1. Formatea los datos específicos del producto
+const ProductCard = ({ name, quantity, price, subtotal, onDelete }) => {
   const cardTitle = `${name}`;
   const cardSubtitle = `Cantidad: ${quantity} - Precio: ${price} - Subtotal: ${subtotal}`;
-  const handleViewProduct = () => {
-    console.log(`Viendo producto SKU: ${sku}`);
-  };
 
   return (
     <InfoCard
       title={cardTitle}
       subtitle={cardSubtitle}
-      onButtonClick={handleViewProduct}
+      onButtonClick={onDelete}
       buttonText="✕"
     />
   );

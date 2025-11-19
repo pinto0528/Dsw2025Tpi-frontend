@@ -2,7 +2,7 @@ import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
 import CartProductCard from "../components/CartProductCard";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ButtonShared from "../../shared/components/atoms/ButtonShared";
 
 function CartPage() {
@@ -12,44 +12,49 @@ function CartPage() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const mockProducts = [
+  const [products, setProducts] = useState([
     {
+      key: 1,
       name: "Nombre de Producto Uno",
       quantity: 150,
       price: 100,
-      subtotal: 0,
     },
     {
+      key: 2,
       name: "Nombre de Producto Dos",
       quantity: 0,
       price: 100,
-      subtotal: 0,
     },
     {
+      key: 3,
       name: "Nombre de Producto Tres",
       quantity: 75,
       price: 100,
-      subtotal: 0,
     },
-    {
-      name: "Nombre de Producto Cuatro",
-      quantity: 20,
-      price: 100,
-      subtotal: 0,
-    },
-    {
-      name: "Nombre de Producto Cinco",
-      quantity: 150,
-      price: 100,
-      subtotal: 0,
-    },
-    {
-      name: "Nombre de Producto Seis",
-      quantity: 0,
-      price: 100,
-      subtotal: 0,
-    },
-  ];
+  ]);
+
+  const handleDeleteProduct = (key) => {
+
+    const updatedProducts = products.filter(
+      (product) => product.key !== key
+    );
+
+    setProducts(updatedProducts);
+  };
+
+  const { productsList, total } = useMemo(() => {
+    const productsList = products.map((product) => ({
+      ...product,
+      subtotal: product.quantity * product.price,
+    }));
+
+    const total = productsList.reduce(
+      (acc, product) => acc + product.subtotal,
+      0
+    );
+
+    return { productsList, total };
+  }, [products]);
 
   return (
     <div className="flex flex-col overflow-auto h-screen">
@@ -64,18 +69,19 @@ function CartPage() {
             </div>
 
             <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto gap-1">
-              {mockProducts.map((product) => (
+              {productsList.map((product) => (
                 <CartProductCard
                   key={product.desc}
                   name={product.name}
                   quantity={product.quantity}
                   price={product.price}
-                  subtotal={product.price * product.quantity}
+                  subtotal={product.subtotal}
+                  onDelete={() => handleDeleteProduct(product.key)}
                 />
               ))}
             </div>
             <div className="flex flex-row justify-between items-center bg-gray-100 rounded-b-lg p-4">
-              <span className="text-xl font-bold">Total: $$$$$$$ </span>
+              <span className="text-xl font-bold">Total: {total.toFixed(2)} </span>
               <ButtonShared className="w-40">Finalizar Compra</ButtonShared>
             </div>
           </div>
