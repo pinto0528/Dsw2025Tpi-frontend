@@ -1,5 +1,5 @@
 import SearchBar from "../../shared/components/DashboardSearchBar";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/DashboardProductCard";
 
 // --- Datos de Ejemplo ---
 const mockProducts = [

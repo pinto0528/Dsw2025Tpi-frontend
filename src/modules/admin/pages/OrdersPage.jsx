@@ -1,5 +1,5 @@
 import SearchBar from "../../shared/components/DashboardSearchBar";
-import OrderCard from "../components/OrderCard";
+import OrderCard from "../components/DashboardOrderCard";
 
 const mockOrders = [
   { orderNumber: 1, clientName: "Cliente Uno", state: "Pendiente" },
