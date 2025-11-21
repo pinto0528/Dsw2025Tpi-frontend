@@ -1,57 +1,29 @@
 import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
 import CartProductCard from "../components/CartProductCard";
-import { Outlet } from "react-router-dom";
-import { useState, useMemo } from "react";
 import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 
+import { useState, useMemo } from "react";
+import { useCart } from "../../../context/CartContext";
+
 function CartPage() {
+  const { cart, removeFromCart } = useCart();
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
-  const [products, setProducts] = useState([
-    {
-      key: 1,
-      name: "Nombre de Producto Uno",
-      quantity: 150,
-      price: 100,
-    },
-    {
-      key: 2,
-      name: "Nombre de Producto Dos",
-      quantity: 0,
-      price: 100,
-    },
-    {
-      key: 3,
-      name: "Nombre de Producto Tres",
-      quantity: 75,
-      price: 100,
-    },
-  ]);
-
-  const handleDeleteProduct = (key) => {
-    const updatedProducts = products.filter((product) => product.key !== key);
-
-    setProducts(updatedProducts);
-  };
-
-  const { productsList, total } = useMemo(() => {
-    const productsList = products.map((product) => ({
+  // Calcular subtotal por producto y total
+  const { cartList, total } = useMemo(() => {
+    const cartList = cart.map((product) => ({
       ...product,
-      subtotal: product.quantity * product.price,
+      quantity: 1, // por ahora fijo, luego lo hacemos editable
+      subtotal: product.currentUnitPrice * 1,
     }));
 
-    const total = productsList.reduce(
-      (acc, product) => acc + product.subtotal,
-      0
-    );
+    const total = cartList.reduce((acc, p) => acc + p.subtotal, 0);
 
-    return { productsList, total };
-  }, [products]);
+    return { cartList, total };
+  }, [cart]);
 
   return (
     <div className="flex flex-col overflow-auto h-screen">
@@ -66,20 +38,21 @@ function CartPage() {
             </div>
 
             <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto gap-1">
-              {productsList.map((product) => (
+              {cartList.map((product) => (
                 <CartProductCard
-                  key={product.desc}
-                  name={product.name}
+                  key={product.sku}
+                  name={product.description}
                   quantity={product.quantity}
-                  price={product.price}
+                  price={product.currentUnitPrice}
                   subtotal={product.subtotal}
-                  onDelete={() => handleDeleteProduct(product.key)}
+                  onDelete={() => removeFromCart(product.sku)}
                 />
               ))}
             </div>
+
             <div className="flex flex-row justify-between items-center bg-gray-100 rounded-b-lg p-4">
               <span className="text-xl font-bold">
-                Total: {total.toFixed(2)}{" "}
+                Total: {total.toFixed(2)}
               </span>
               <ButtonShared className="w-40">Finalizar Compra</ButtonShared>
             </div>
