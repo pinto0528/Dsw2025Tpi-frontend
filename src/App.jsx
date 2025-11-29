@@ -5,23 +5,23 @@ import AdminPage from "./modules/admin/pages/AdminPage";
 import RegisterPage from "./modules/auth/pages/RegisterPage";
 import CartPage from "./modules/cart/pages/CartPage";
 import AccountPage from "./modules/account/pages/AccountPage";
+import ProtectedRoute from "./modules/shared/components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        <Route path="/" element={<MainPage />} />
-
-        <Route path="/login" element={<LoginPage />} />
-
+        {/* RUTAS PÚBLICAS */}
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path='/main' element={<MainPage/>} />
 
-        <Route path="/admin/*" element={<AdminPage />} />
-
-        <Route path="/cart/*" element={<CartPage />} />
-
-        <Route path="/account/*" element={<AccountPage/>} />
+        {/* RUTAS PRIVADAS */}
+        <Route element={<ProtectedRoute />}>
+            <Route path="/admin/*" element={<AdminPage />} />
+            <Route path="/cart/*" element={<CartPage />} />
+            <Route path="/account/*" element={<AccountPage/>} />
+        </Route>
 
       </Routes>
     </BrowserRouter>

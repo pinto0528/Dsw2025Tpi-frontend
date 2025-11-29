@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import InputShared from "../../shared/components/atoms/InputShared";
-import ButtonShared from "../../shared/components/atoms/ButtonShared";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import { useState } from "react";
 import { login } from "../services/login";
 import { useNavigate } from "react-router-dom";
+
 
 function LoginForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,7 +28,22 @@ function LoginForm() {
       console.log(data);
     } catch (error) {
       console.error(error);
-      setErrorMessage("Llame a soporte");
+      setErrorMessage("Ocurrio un error inesperado. Llame a soporte");
+    }
+  };
+
+  const onSubmit = async (formData) => {
+    try {
+      const response = await login(formData.username, formData.password);
+      if (response.data) {
+        localStorage.setItem("token", response.data.token);
+        alert("Se ha iniciado sesi n correctamente");
+        navigate("/main");
+      } else {
+        setErrorMessage(response.error.frontendErrorMessage);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
     }
   };
 
@@ -53,7 +69,7 @@ function LoginForm() {
         lg:w-[50dvw]
         max-w-[600px]
       "
-      onSubmit={handleSubmit(onValid)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <p
         className="
