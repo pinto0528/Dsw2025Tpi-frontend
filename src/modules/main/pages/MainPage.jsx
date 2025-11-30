@@ -29,7 +29,7 @@ const MainPage = () => {
     <div className="flex flex-col overflow-auto h-screen">
       <Header onMenuClick={toggleSidebar} />
 
-      <div className="flex flex-1 pb-2 overflow-auto">
+      <div className="flex flex-1 pb-2 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} />
         <div className="flex flex-col flex-1 px-2 overflow-auto">
           <div className="flex flex-col flex-1 overflow-auto">

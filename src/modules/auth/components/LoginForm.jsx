@@ -37,7 +37,7 @@ function LoginForm() {
       const response = await login(formData.username, formData.password);
       if (response.data) {
         localStorage.setItem("token", response.data.token);
-        alert("Se ha iniciado sesi n correctamente");
+        alert("Se ha iniciado sesion correctamente");
         navigate("/main");
       } else {
         setErrorMessage(response.error.frontendErrorMessage);
