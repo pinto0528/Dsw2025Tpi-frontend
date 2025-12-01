@@ -4,7 +4,7 @@ function Input({ label, error = '', ...restProps }) {
       className='
         flex
         flex-col
-        h-20
+        gap-2
       '
     >
       <label>{label}:</label>

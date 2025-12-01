@@ -21,15 +21,13 @@ const InfoCardShared = ({
   onButtonClick,
 }) => {
   return (
-    // Contenedor principal de la tarjeta
     <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
-      {/* Sección de información (izquierda) */}
+
       <div>
         <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
         <p className="text-sm text-gray-500">{subtitle}</p>
       </div>
 
-      {/* Sección de acción (derecha) */}
       <div>
         <ButtonShared
           onClick={onButtonClick}
