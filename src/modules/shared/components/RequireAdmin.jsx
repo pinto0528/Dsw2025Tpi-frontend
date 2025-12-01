@@ -1,13 +1,20 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
+import { useUi } from "../../shared/context/UiContext";
 
 const RequireAdmin = () => {
   const token = localStorage.getItem("token");
-
+  const { openLoginModal } = useUi();
 
   if (!token) {
-    return <Navigate to="/" replace />;
+    useEffect(() => {
+      openLoginModal();
+    }, []);
+
+    return <Navigate to="/main" replace />;
   }
+
 
   try {
     const decoded = jwtDecode(token);
@@ -22,16 +29,19 @@ const RequireAdmin = () => {
     }
 
     if (!isAdmin) {
-      return <Navigate to="/" replace />;
+        return <Navigate to="/main" replace />;
     }
-
 
     return <Outlet />;
 
   } catch (error) {
-
     localStorage.removeItem("token");
-    return <Navigate to="/" replace />;
+    
+    useEffect(() => {
+        openLoginModal();
+    }, []);
+
+    return <Navigate to="/main" replace />;
   }
 };
 

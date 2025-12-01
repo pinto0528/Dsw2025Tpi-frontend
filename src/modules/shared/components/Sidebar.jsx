@@ -1,21 +1,13 @@
 import React from "react";
-import ButtonShared from "./Atoms/ButtonShared";
-import { NavLink, useNavigate } from "react-router-dom";
-// 1. Importamos nuestro hook personalizado
-import { useAuth } from "../components/hooks/useAuth"; 
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth"; 
+import AuthButton from "./AuthButton";
 
 const Sidebar = ({ isOpen }) => {
-  const navigate = useNavigate();
-
-  // 2. Usamos el hook para obtener los datos y funciones
-  const { isAdmin, isLoggedIn, logout } = useAuth();
-
-  const handleLogin = () => {
-    navigate("/");
-  };
+  const { isAdmin } = useAuth();
 
   const navLinks = [
-    { to: "/", label: "Principal", protected: false },
+    { to: "/main", label: "Principal", protected: false },
     { to: "/cart", label: "Carrito", protected: false },
     { to: "/account", label: "Cuenta", protected: false },
     
@@ -65,15 +57,7 @@ const Sidebar = ({ isOpen }) => {
       </div>
 
       <div className="md:hidden mt-auto">
-        {isLoggedIn ? (
-          <ButtonShared className="px-8" onClick={logout}>
-            Cerrar Sesion
-          </ButtonShared>
-        ) : (
-          <ButtonShared className="px-8" onClick={handleLogin}>
-            Iniciar Sesion
-          </ButtonShared>
-        )}
+        <AuthButton className="px-8" />
       </div>
       
       <div className="mt-2 text-sm text-gray-500 text-center">

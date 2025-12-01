@@ -1,8 +1,6 @@
 import React from "react";
-import ButtonShared from "./atoms/ButtonShared";
+import ButtonShared from "./Atoms/ButtonShared";
 
-// 1. El componente ahora acepta 'mockOptions' como prop.
-//    Se asigna un array vacío por defecto '[]' para evitar errores si no se pasa.
 const SearchBar = ({ mockOptions = [] }) => {
   return (
     <div className="flex w-full flex-col sm:flex-row sm:items-center">
