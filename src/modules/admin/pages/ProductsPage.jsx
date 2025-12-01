@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import SearchBar from "../../shared/components/DashboardSearchBar";
 import { getAllProducts } from "../services/products";
-// Importamos el nuevo componente
 import DashboardProductItem from "../components/DashboardProductItem";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 
 const productSearchOptions = [
   { value: "", label: "Estado" },
   { value: "todos", label: "Todos" },
 ];
 
-
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,7 +36,18 @@ const ProductsPage = () => {
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-col bg-gray-100 rounded-lg p-4 mb-2">
-        <h1 className="text-2xl font-bold">Productos</h1>
+        <div className="flex justify-between items-center mb-2">
+          
+          <h1 className="text-2xl font-bold">Productos</h1>
+          <div className="mr-4">
+            <ButtonShared className="mx-2"
+            onClick={() => navigate('/admin/products/create')}
+            >
+              Crear Producto
+            </ButtonShared>
+          </div>
+
+        </div>
         <SearchBar mockOptions={productSearchOptions} />
       </div>
 
@@ -46,10 +59,11 @@ const ProductsPage = () => {
         <div className="flex flex-col space-y-2">
           {!loading && products.map((p) => (
             <DashboardProductItem 
-              key={p.id}
+              key={p.sku}
+              id={p.id}
               name={p.name}
               sku={p.sku}
-              stock={p.stockQuantity} // Ojo con el nombre de la propiedad del backend
+              stock={p.stockQuantity}
               price={p.currentUnitPrice}
               isActive={p.isActive}
             />

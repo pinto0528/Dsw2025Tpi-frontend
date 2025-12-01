@@ -34,3 +34,24 @@ export const getAllProducts = async () => {
     };
   }
 };
+
+export const getProductById = async (id) => {
+  try {
+    const response = await fetch(`/api/products/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      return { data: null, error: 'Error al cargar el producto' };
+    }
+
+    const data = await response.json();
+    return { data: data, error: null };
+  } catch (error) {
+    console.error(error);
+    return { data: null, error: 'Error de conexión' };
+  }
+};

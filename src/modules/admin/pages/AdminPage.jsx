@@ -6,7 +6,7 @@ import DashboardPage from "./DashboardPage";
 import ProductsPage from "./ProductsPage";
 import OrdersPage from "./OrdersPage";
 import CreateProductsPage from "./CreateProductsPage";
-import ProductsDetailPage from "./ProductsDetailPage";
+import ProductDetailPage from "./ProductsDetailPage";
 
 function AdminPage() {
   return (
@@ -15,7 +15,7 @@ function AdminPage() {
         <Route index element={<DashboardPage />} />
         <Route path="products" element={<ProductsPage />} />
         <Route path="products/create" element={<CreateProductsPage />} />
-        <Route path="products/:sku" element={<ProductsDetailPage />} />
+        <Route path="products/:id" element={<ProductDetailPage />} />
         <Route path="orders" element={<OrdersPage />} />
       </Route>
     </Routes>

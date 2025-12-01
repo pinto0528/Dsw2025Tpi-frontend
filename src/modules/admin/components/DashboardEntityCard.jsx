@@ -20,7 +20,6 @@ const DashboardEntityCard = ({
   const navigate = useNavigate();
 
   const handleView = () => {
-    // Construye la ruta dinámicamente: /admin/products/001 ó /admin/orders/1050
     navigate(`${rootPath}/${basePath}/${id}`);
   };
 

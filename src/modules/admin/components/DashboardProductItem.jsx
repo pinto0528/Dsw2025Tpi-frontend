@@ -1,7 +1,10 @@
 import React from "react";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
+import { useNavigate } from "react-router-dom";
 
-const DashboardProductItem = ({ name, sku, stock, price, isActive }) => {
-  // Lógica visual para el estado
+const DashboardProductItem = ({ id, name, sku, stock, price, isActive }) => {
+  const navigate = useNavigate();
+
   let statusLabel = "Activo";
   let statusColor = "bg-green-100 text-green-800";
 
@@ -19,22 +22,17 @@ const DashboardProductItem = ({ name, sku, stock, price, isActive }) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-md transition-shadow">
       
-      {/* Izquierda: Info Principal */}
       <div className="flex flex-col">
         <h3 className="text-md font-bold text-gray-800">{name}</h3>
         <span className="text-xs text-gray-400 font-mono">SKU: {sku}</span>
       </div>
 
-      {/* Derecha: Detalles numéricos y Estado */}
       <div className="flex flex-row items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
-        
-        {/* Precio */}
         <div className="text-right">
           <p className="text-xs text-gray-500">Precio</p>
           <p className="font-semibold text-gray-700">${price}</p>
         </div>
 
-        {/* Stock */}
         <div className="text-right w-16">
           <p className="text-xs text-gray-500">Stock</p>
           <p className={`font-bold ${stock === 0 ? "text-red-500" : "text-gray-700"}`}>
@@ -42,9 +40,12 @@ const DashboardProductItem = ({ name, sku, stock, price, isActive }) => {
           </p>
         </div>
 
-        {/* Badge de Estado */}
         <div className={`px-3 py-1 rounded-full text-xs font-medium ${statusColor}`}>
           {statusLabel}
+        </div>
+
+        <div>
+          <ButtonShared onClick={() => navigate(`/admin/products/${id}`)}>Ver</ButtonShared>
         </div>
       </div>
     </div>

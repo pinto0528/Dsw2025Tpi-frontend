@@ -8,6 +8,7 @@ import AccountPage from "./modules/account/pages/AccountPage";
 import ProtectedRoute from "./modules/shared/components/ProtectedRoute";
 import RequireAdmin from "./modules/shared/components/RequireAdmin"; 
 import { UiProvider } from "./modules/shared/context/UiContext";
+import ProductDetailPage from "./modules/admin/pages/ProductsDetailPage";
 
 function App() {
   return (
