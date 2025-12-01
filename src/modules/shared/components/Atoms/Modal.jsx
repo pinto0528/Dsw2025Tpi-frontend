@@ -11,11 +11,16 @@ function Modal({ isOpen, onClose, children }) {
 
   return (
     <div
-      // Backdrop (fondo oscuro)
       onClick={onClose}
-      className="fixed inset-0 bg-blue-50 flex flex-col justify-center items-center z-50"
+      className="
+      fixed inset-0 
+      bg-black/50
+      flex flex-col 
+      justify-center 
+      items-center z-50"
+      
     >
-      {/* Contenedor del Modal (evita cierre al hacer clic dentro) */}
+
       <div onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>
   );

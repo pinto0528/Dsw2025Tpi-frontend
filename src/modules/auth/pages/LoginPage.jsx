@@ -1,23 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import Modal from "../../shared/components/atoms/Modal";
+import { useUi } from "../../shared/context/UiContext";
 
 function LoginPage() {
-  // Estado para controlar la visibilidad del modal
   const [isModalOpen, setIsModalOpen] = useState(true);
+  const navigate = useNavigate();
+  
+  const { setIsLoggedIn } = useUi();
 
-  // Funciones para claridad (opcional)
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(true);
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true); 
+    
+    navigate("/main");
+  };
 
   return (
-    <div
-      className="
-    "
-    >
-      {/* Renderiza el Modal */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <LoginForm />
+    <div className="">
+      <Modal isOpen={isModalOpen}>
+        <LoginForm onSuccess={handleLoginSuccess} />
       </Modal>
     </div>
   );
