@@ -20,7 +20,7 @@ function AdminLayout() {
         <Sidebar isOpen={isSidebarOpen} />
 
         {/* Content */}
-        <div className="flex flex-col flex-1 px-2">
+        <div className="flex flex-col flex-1 px-2 overflow-y-auto">
           <Outlet />
         </div>
       </div>

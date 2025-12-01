@@ -1,5 +1,8 @@
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import SearchBar from "../../shared/components/DashboardSearchBar";
 import ProductCard from "../components/DashboardProductCard";
+import { useNavigate } from "react-router-dom";
+import DashboardEntityCard from "../components/DashboardEntityCard";
 
 // --- Datos de Ejemplo ---
 const mockProducts = [
@@ -32,9 +35,11 @@ const productSearchOptions = [
   { value: "stockBajo", label: "Stock Bajo" },
 ];
 
+
 const ProductsPage = () => {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col p-6">
       <div
         className="
         flex
@@ -43,9 +48,19 @@ const ProductsPage = () => {
         rounded-lg
         p-4
         mb-2
+        shadow-sm
       "
       >
-        <h1 className="text-2xl font-bold">Productos</h1>
+        <div className="flex flex-row justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Productos</h1>
+          
+          <ButtonShared 
+            className="w-fit"
+            onClick={() => navigate('/admin/products/create')} 
+          >
+            Crear Producto
+          </ButtonShared>
+        </div>
 
         <div className="">
           <SearchBar mockOptions={productSearchOptions} />
@@ -61,17 +76,16 @@ const ProductsPage = () => {
         rounded-lg
         p-4
         shadow-sm
-        overflow-y-auto
       "
       >
         <div className="flex flex-col space-y-3">
           {mockProducts.map((product) => (
-            <ProductCard
+            <DashboardEntityCard
               key={product.sku}
-              sku={product.sku}
-              name={product.name}
-              stock={product.stock}
-              state={product.state}
+              id={product.sku}
+              basePath="products"
+              title={`SKU ${product.sku} - ${product.name}`}
+              subtitle={`Stock: ${product.stock} - Estado: ${product.state}`}
             />
           ))}
         </div>
