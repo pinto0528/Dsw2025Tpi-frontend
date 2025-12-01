@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    @apply m-0 text-[1rem] sm:text-[1rem] md:text-lg lg:text-lg xl:text-lg ;
+    @apply m-0 text-[1rem] sm:text-[1rem] md:text-lg lg:text-lg xl:text-lg overflow-hidden;
   }
   #root {
     @apply h-[100dvh] bg-blue-100;
