@@ -2,52 +2,60 @@ import React, { useState, useEffect } from "react";
 import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
 import ProductCard from "../components/ProductCard";
+import { getAllProducts } from "../../admin/services/products"; // Reutilizamos el servicio
 
 const MainPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadProducts = async () => {
-      try {
-        const response = await fetch("https://localhost:5000/api/products");
-        const data = await response.json();
+      setLoading(true);
+      const { data, error } = await getAllProducts();
+      if (!error && data) {
         setProducts(data);
-      } catch (error) {
-        console.error("Error al cargar productos:", error);
       }
+      setLoading(false);
     };
 
     loadProducts();
   }, []);
 
   return (
-    <div className="flex flex-col overflow-auto h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Header onMenuClick={toggleSidebar} />
 
-      <div className="flex flex-1 pb-2 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} />
-        <div className="flex flex-col flex-1 px-2 overflow-auto">
-          <div className="flex flex-col flex-1 overflow-auto">
-            <div className="flex flex-col bg-gray-100 rounded-lg p-4 mb-2">
-              <h1 className="text-2xl font-bold">Main Page</h1>
+        
+        {/* Área Principal con Scroll */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-100 mb-2 mx-2 rounded-lg">
+          <div className="max-w-7xl mx-auto">
+            
+            <div className="mb-6">
+              <h1 className="text-3xl font-bold text-gray-800">Catálogo</h1>
+              <p className="text-gray-500 mt-1">Explora nuestros productos disponibles</p>
             </div>
 
-            <div className="flex flex-col flex-1 bg-gray-100 rounded-lg p-4 shadow-sm overflow-y-auto gap-1">
-              <div
-                className="
-              place-items-center
-              grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 "
-              >
-                {products.map((product) => (
-                  <ProductCard key={product.sku} product={product} />
-                ))}
+            {loading ? (
+              <div className="text-center py-20 text-gray-400">Cargando catálogo...</div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <ProductCard key={product.id || product.sku} product={product} />
+                  ))
+                ) : (
+                  <p className="col-span-full text-center text-gray-500">
+                    No se encontraron productos.
+                  </p>
+                )}
               </div>
-            </div>
+            )}
+
           </div>
         </div>
       </div>
