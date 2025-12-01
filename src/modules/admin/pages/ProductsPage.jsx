@@ -35,7 +35,7 @@ const productSearchOptions = [
 
 const ProductsPage = () => {
   return (
-    <div className="flex flex-col w-full h-full overflow-y-auto p-6">
+    <div className="flex flex-col p-6">
       <div
         className="
         flex
@@ -44,6 +44,7 @@ const ProductsPage = () => {
         rounded-lg
         p-4
         mb-2
+        shadow-sm
       "
       >
         <div className="flex flex-row justify-between items-center mb-4">
