@@ -9,6 +9,7 @@ const productSearchOptions = [
   { value: "todos", label: "Todos" },
 ];
 
+
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
