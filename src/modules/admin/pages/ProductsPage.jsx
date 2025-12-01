@@ -1,3 +1,4 @@
+import ButtonShared from "../../shared/components/atoms/ButtonShared";
 import SearchBar from "../../shared/components/DashboardSearchBar";
 import ProductCard from "../components/DashboardProductCard";
 
@@ -34,7 +35,7 @@ const productSearchOptions = [
 
 const ProductsPage = () => {
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col w-full h-full overflow-y-auto p-6">
       <div
         className="
         flex
@@ -45,7 +46,11 @@ const ProductsPage = () => {
         mb-2
       "
       >
-        <h1 className="text-2xl font-bold">Productos</h1>
+        <div className="flex flex-row justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Productos</h1>
+          
+          <ButtonShared className = "w-fit">Crear Producto</ButtonShared>
+        </div>
 
         <div className="">
           <SearchBar mockOptions={productSearchOptions} />
@@ -61,7 +66,6 @@ const ProductsPage = () => {
         rounded-lg
         p-4
         shadow-sm
-        overflow-y-auto
       "
       >
         <div className="flex flex-col space-y-3">
