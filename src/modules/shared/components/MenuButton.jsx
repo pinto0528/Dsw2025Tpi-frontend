@@ -1,11 +1,10 @@
-import React from 'react'; // Añadido import
+import React from 'react';
 
-// 1. Acepta 'onClick' como prop
+
 const MenuButton = ({ onClick }) => (
   <button
     onClick={onClick}
   >
-    Menu
   </button>
 );
 

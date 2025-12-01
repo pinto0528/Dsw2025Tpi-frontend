@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import InputShared from "../../shared/components/atoms/InputShared";
-import ButtonShared from "../../shared/components/atoms/ButtonShared";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import { useState } from "react";
-// Se asume que tienes un servicio de registro similar al de login
 import { registerUser } from "../services/register";
+import { useNavigate } from "react-router-dom"; // Importamos para redirigir tras registro
 
 function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -16,26 +18,37 @@ function RegisterForm() {
     defaultValues: {
       username: "",
       email: "",
-      role: "",
+      role: "", 
       password: "",
       confirmPassword: "",
     },
   });
 
-  // Observamos el valor de 'password' para validación
   const password = watch("password");
 
   const onValid = async (formData) => {
     try {
-      // Llamamos al servicio de registro
-      const { data, error } = await registerUser(formData);
+      const payload = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role.toUpperCase()
+      };
+
+      // 2. LLAMAR AL SERVICIO
+      const { data, error } = await registerUser(payload);
 
       if (error) {
-        setErrorMessage(error.frontendErrorMessage);
+        // Manejo de errores que vienen del backend
+        setErrorMessage(error.frontendErrorMessage || "Error en el registro");
         return;
       }
 
+      // 3. ÉXITO
       console.log(data);
+      alert("Usuario registrado con éxito");
+      navigate("/");
+
     } catch (error) {
       console.error(error);
       setErrorMessage("Error inesperado. Llame a soporte");
@@ -45,40 +58,15 @@ function RegisterForm() {
   return (
     <div>
       <form
-        className="
-        flex
-        flex-col
-        gap-2
-        bg-white
-        p-8
-        rounded-lg
-        shadow-lg
-        min-w-[300px]
-        w-[100dvw]
-        sm:w-[70dvw]
-        md:w-[60dvw]
-        lg:w-[50dvw]
-        max-w-[600px]
-        
-      "
+        className="flex flex-col gap-2 bg-white p-8 rounded-lg shadow-lg
+        min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[600px]"
         onSubmit={handleSubmit(onValid)}
       >
-        <p
-          className="
-        text-2xl
-        font-bold
-        pb-2
-    
-    "
-        >
-          Registro de Usuario
-        </p>
+        <p className="text-2xl font-bold pb-2">Registro de Usuario</p>
 
         <InputShared
           label="Usuario"
-          {...register("username", {
-            required: "Usuario es obligatorio",
-          })}
+          {...register("username", { required: "Usuario es obligatorio" })}
           error={errors.username?.message}
         />
 
@@ -95,23 +83,19 @@ function RegisterForm() {
           error={errors.email?.message}
         />
 
-        {/* Como InputShared es solo para <input>, 
-        usamos un div y <select> nativos para el Role,
-        replicando el estilo y manejo de error.
-      */}
         <div className="flex flex-col h-20">
           <label>Role:</label>
           <select
-            className={errors.role ? "border-red-400" : ""}
+            className={`border rounded p-2 ${errors.role ? "border-red-400" : "border-gray-300"}`}
             {...register("role", {
               required: "Debe seleccionar un role",
             })}
           >
             <option value="">Seleccione una opción</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-            {/* Agrega más roles si es necesario */}
+            <option value="ADMIN">Admin</option>
+            <option value="CLIENT">Client</option> 
           </select>
+          
           {errors.role && (
             <p className="text-red-500 text-base sm:text-xs">
               {errors.role.message}

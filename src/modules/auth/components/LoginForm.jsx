@@ -5,8 +5,8 @@ import { useState } from "react";
 import { login } from "../services/login";
 import { useNavigate } from "react-router-dom";
 
-
-function LoginForm() {
+// 1. ACEPTAR LA PROP onSuccess (que viene del Header como closeModal)
+function LoginForm({ onSuccess }) { 
   const [errorMessage, setErrorMessage] = useState("");
 
   const {
@@ -15,30 +15,21 @@ function LoginForm() {
     formState: { errors },
   } = useForm({ defaultValues: { username: "", password: "" } });
 
-  const onValid = async (formData) => {
-    try {
-      const { data, error } = await login(formData.username, formData.password);
-
-      if (error) {
-        setErrorMessage(error.frontendErrorMessage);
-
-        return;
-      }
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Ocurrio un error inesperado. Llame a soporte");
-    }
-  };
+  const navigate = useNavigate();
 
   const onSubmit = async (formData) => {
     try {
       const response = await login(formData.username, formData.password);
+      
       if (response.data) {
         localStorage.setItem("token", response.data.token);
-        alert("Se ha iniciado sesion correctamente");
-        navigate("/main");
+        
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate("/main");
+        }
+        
       } else {
         setErrorMessage(response.error.frontendErrorMessage);
       }
@@ -47,53 +38,31 @@ function LoginForm() {
     }
   };
 
-  const navigate = useNavigate();
+  
+
   const handleRegister = () => {
-    navigate("/register");
+    if (onSuccess) onSuccess(); 
+    navigate("/signup");
   };
 
   return (
     <form
       className="
-        flex
-        flex-col
-        gap-2
-        bg-white
-        p-8
-        rounded-lg
-        shadow-lg
-        min-w-[300px]
-        w-[100dvw]
-        sm:w-[70dvw]
-        md:w-[60dvw]
-        lg:w-[50dvw]
-        max-w-[600px]
+        flex flex-col gap-2 bg-white p-8 rounded-lg shadow-lg
+        min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[600px]
       "
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p
-        className="
-        text-2xl
-        font-bold
-        pb-2
-    
-    "
-      >
-        Iniciar Sesión
-      </p>
+      <p className="text-2xl font-bold pb-2">Iniciar Sesión</p>
 
       <InputShared
         label="Usuario"
-        {...register("username", {
-          required: "Usuario es obligatorio",
-        })}
+        {...register("username", { required: "Usuario es obligatorio" })}
         error={errors.username?.message}
       />
       <InputShared
         label="Contraseña"
-        {...register("password", {
-          required: "Contraseña es obligatorio",
-        })}
+        {...register("password", { required: "Contraseña es obligatorio" })}
         type="password"
         error={errors.password?.message}
       />
