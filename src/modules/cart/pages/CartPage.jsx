@@ -40,6 +40,8 @@ function CartPage() {
             <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto gap-1">
               {cartList.map((product) => (
                 <CartProductCard
+                  id={product.id}
+                  sku={product.sku}
                   key={product.sku}
                   name={product.description}
                   quantity={product.quantity}

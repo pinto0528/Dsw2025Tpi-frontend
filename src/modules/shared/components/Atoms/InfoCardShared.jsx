@@ -21,7 +21,7 @@ const InfoCardShared = ({
   onButtonClick,
 }) => {
   return (
-    <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
+    <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
 
       <div>
         <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
