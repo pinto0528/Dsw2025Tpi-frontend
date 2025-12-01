@@ -2,6 +2,7 @@ import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import SearchBar from "../../shared/components/DashboardSearchBar";
 import ProductCard from "../components/DashboardProductCard";
 import { useNavigate } from "react-router-dom";
+import DashboardEntityCard from "../components/DashboardEntityCard";
 
 // --- Datos de Ejemplo ---
 const mockProducts = [
@@ -79,12 +80,12 @@ const ProductsPage = () => {
       >
         <div className="flex flex-col space-y-3">
           {mockProducts.map((product) => (
-            <ProductCard
+            <DashboardEntityCard
               key={product.sku}
-              sku={product.sku}
-              name={product.name}
-              stock={product.stock}
-              state={product.state}
+              id={product.sku}
+              basePath="products"
+              title={`SKU ${product.sku} - ${product.name}`}
+              subtitle={`Stock: ${product.stock} - Estado: ${product.state}`}
             />
           ))}
         </div>
