@@ -1,12 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import MenuButton from "./MenuButton";
 import ButtonShared from "./Atoms/ButtonShared";
 import SearchBarShared from "./Atoms/SearchBarShared";
 
-// 1. Acepta 'onMenuClick' como prop
 const Header = ({ onMenuClick }) => {
+  const navigate = useNavigate();
+
+  
+  const isLoggedIn = !!localStorage.getItem("token");
+
   const handleLogout = () => {
-    window.location.href = "/login";
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const handleLogin = () => {
+    navigate("/");
   };
 
   return (
@@ -21,14 +31,24 @@ const Header = ({ onMenuClick }) => {
         <div className="block lg:hidden mr-4">
           <MenuButton onClick={onMenuClick} />
         </div>
+        
         <h1 className="text-3xl">Header</h1>
+        
         <div className="mx-5">
           <SearchBarShared />
         </div>
+
+        {/* Lógica condicional del botón */}
         <div className="hidden lg:flex h-[36px]">
-          <ButtonShared className="px-8" onClick={handleLogout}>
-            Cerrar Sesion
-          </ButtonShared>
+          {isLoggedIn ? (
+            <ButtonShared className="px-8" onClick={handleLogout}>
+              Cerrar Sesion
+            </ButtonShared>
+          ) : (
+            <ButtonShared className="px-8" onClick={handleLogin}>
+              Iniciar Sesion
+            </ButtonShared>
+          )}
         </div>
       </div>
     </div>

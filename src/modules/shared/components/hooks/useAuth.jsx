@@ -1,0 +1,33 @@
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
+export const useAuth = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  let isAdmin = false;
+  let isLoggedIn = !!token;
+
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      const roleClaim = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decoded.role;
+
+      if (Array.isArray(roleClaim)) {
+        isAdmin = roleClaim.includes("ADMIN");
+      } else {
+        isAdmin = roleClaim === "ADMIN";
+      }
+    } catch (error) {
+      console.error("Token inválido", error);
+      isLoggedIn = false;
+      isAdmin = false;
+    }
+  }
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  return { isAdmin, isLoggedIn, logout };
+};
