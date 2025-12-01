@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "../../shared/components/DashboardSearchBar";
-import { getAllOrders } from "../services/orders"; // <--- Importamos el servicio
+import { getAllOrders } from "../services/orders";
+// Importamos el nuevo componente
+import DashboardOrderItem from "../components/DashboardOrderItem";
 
 const orderSearchOptions = [
-  { value: "", label: "Estado" }, // El backend aun no devuelve estado en el GET, pero dejamos el filtro visual
+  { value: "", label: "Estado" }, 
   { value: "todos", label: "Todos" },
 ];
 
@@ -37,23 +39,23 @@ const OrdersPage = () => {
 
       <div className="flex flex-col flex-1 bg-gray-100 rounded-lg p-4 shadow-sm overflow-y-auto">
         
-        {loading && <p className="text-center mt-4">Cargando órdenes...</p>}
-        {error && <p className="text-center text-red-500 mt-4">{error}</p>}
+        {loading && <p className="text-center mt-10 text-gray-500">Cargando órdenes...</p>}
+        {error && <p className="text-center mt-10 text-red-500">{error}</p>}
         
         {!loading && !error && orders.length === 0 && (
-           <p className="text-center mt-4">No hay órdenes registradas.</p>
+           <p className="text-center mt-10 text-gray-500">No hay órdenes registradas.</p>
         )}
 
         <div className="flex flex-col space-y-2">
           {!loading && orders.map((order) => (
-            <div key={order.id} className="bg-white p-3 border rounded shadow-sm flex flex-col gap-1">
-              {/* Mostramos los datos crudos que vienen del backend */}
-              <p className="font-bold text-sm text-gray-500">ID: {order.id}</p>
-              <p><strong>Cliente ID:</strong> {order.customerId}</p>
-              <p><strong>Dirección:</strong> {order.shippingAddress}</p>
-              <p><strong>Total:</strong> ${order.totalAmount}</p>
-              <p className="text-xs text-gray-400">Items: {order.orderItems?.length || 0}</p>
-            </div>
+            <DashboardOrderItem 
+                key={order.id}
+                id={order.id}
+                customerId={order.customerId}
+                address={order.shippingAddress}
+                total={order.totalAmount}
+                itemsCount={order.orderItems ? order.orderItems.length : 0}
+            />
           ))}
         </div>
 
