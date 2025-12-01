@@ -1,6 +1,7 @@
-import ButtonShared from "../../shared/components/atoms/ButtonShared";
+import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import SearchBar from "../../shared/components/DashboardSearchBar";
 import ProductCard from "../components/DashboardProductCard";
+import { useNavigate } from "react-router-dom";
 
 // --- Datos de Ejemplo ---
 const mockProducts = [
@@ -33,7 +34,9 @@ const productSearchOptions = [
   { value: "stockBajo", label: "Stock Bajo" },
 ];
 
+
 const ProductsPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col p-6">
       <div
@@ -50,7 +53,12 @@ const ProductsPage = () => {
         <div className="flex flex-row justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Productos</h1>
           
-          <ButtonShared className = "w-fit">Crear Producto</ButtonShared>
+          <ButtonShared 
+            className="w-fit"
+            onClick={() => navigate('/admin/products/create')} 
+          >
+            Crear Producto
+          </ButtonShared>
         </div>
 
         <div className="">

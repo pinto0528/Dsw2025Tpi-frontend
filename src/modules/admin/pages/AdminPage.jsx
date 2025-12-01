@@ -5,6 +5,7 @@ import AdminLayout from "../templates/AdminLayout";
 import DashboardPage from "./DashboardPage";
 import ProductsPage from "./ProductsPage";
 import OrdersPage from "./OrdersPage";
+import CreateProductsPage from "./CreateProductsPage";
 
 function AdminPage() {
   return (
@@ -12,6 +13,7 @@ function AdminPage() {
       <Route path="/" element={<AdminLayout />}>
         <Route index element={<DashboardPage />} />
         <Route path="products" element={<ProductsPage />} />
+        <Route path="products/create" element={<CreateProductsPage />} />
         <Route path="orders" element={<OrdersPage />} />
       </Route>
     </Routes>
