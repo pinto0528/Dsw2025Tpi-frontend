@@ -1,22 +1,28 @@
 import { frontendErrorMessage } from '../../auth/helpers/backendError';
 
-const API_URL = "http://localhost:5142/api/orders";
-
 export const createOrder = async (cartItems, customerId, token) => {
   
+
   const payload = {
-    customerId: customerId, 
-    shippingAddress: "Dirección predeterminada (Falta implementar en Front)",
-    billingAddress: "Dirección predeterminada (Falta implementar en Front)",
-    notes: "Pedido creado desde la Web",
+    customerId: customerId,
+    shippingAddress: "Dirección Test",
+    billingAddress: "Dirección Test",
+    notes: "Pedido Web",
     orderItems: cartItems.map((item) => ({
-      productId: item.id,
+      productId: item.id, 
       quantity: item.quantity || 1
     }))
   };
 
+  console.group("DEBUG CREATE ORDER");
+  console.log("1. Customer ID recibido:", customerId);
+  console.log("2. Token recibido:", token);
+  console.log("3. Payload FINAL a enviar:", JSON.stringify(payload, null, 2));
+  console.groupEnd();
+
+
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch('/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,16 +35,23 @@ export const createOrder = async (cartItems, customerId, token) => {
       let errorData = {};
       try {
         errorData = await response.json();
+
+        console.error("ERROR BACKEND:", errorData);
       } catch (e) {
-        // Si el backend no devuelve JSON en el error
-        errorData = { code: 'UNKNOWN_ERROR' };
+        errorData = { title: 'Error desconocido' };
+      }
+
+      let specificError = "";
+      if (errorData.errors) {
+        const firstKey = Object.keys(errorData.errors)[0];
+        if (firstKey) specificError = errorData.errors[firstKey][0];
       }
 
       return {
         data: null,
         error: {
           ...errorData,
-          frontendErrorMessage: frontendErrorMessage[errorData.code] || "Ocurrió un error al procesar la compra.",
+          frontendErrorMessage: specificError || errorData.title || "Error en la compra.",
         },
       };
     }
@@ -48,11 +61,6 @@ export const createOrder = async (cartItems, customerId, token) => {
 
   } catch (error) {
     console.error("Error de red:", error);
-    return {
-      data: null,
-      error: {
-        frontendErrorMessage: "Error de conexión. Verifica tu internet.",
-      },
-    };
+    return { data: null, error: { frontendErrorMessage: "Error de conexión." } };
   }
 };

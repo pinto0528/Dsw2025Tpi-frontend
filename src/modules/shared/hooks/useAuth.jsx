@@ -4,12 +4,19 @@ import { useNavigate } from "react-router-dom";
 export const useAuth = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  
   let isAdmin = false;
   let isLoggedIn = !!token;
+  let userId = null; // <--- Nuevo campo
 
   if (token) {
     try {
       const decoded = jwtDecode(token);
+
+      console.log("Decoded JWT:", decoded);
+
+      userId = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+
       const roleClaim = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decoded.role;
 
       if (Array.isArray(roleClaim)) {
@@ -21,6 +28,7 @@ export const useAuth = () => {
       console.error("Token inválido", error);
       isLoggedIn = false;
       isAdmin = false;
+      userId = null;
     }
   }
 
@@ -29,5 +37,5 @@ export const useAuth = () => {
     navigate("/");
   };
 
-  return { isAdmin, isLoggedIn, logout };
+  return { isAdmin, isLoggedIn, userId, logout };
 };
