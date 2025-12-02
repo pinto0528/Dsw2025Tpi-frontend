@@ -8,7 +8,6 @@ function RegisterPage() {
 
   // Funciones para claridad (opcional)
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(true);
 
   return (
     <div
@@ -16,7 +15,7 @@ function RegisterPage() {
     "
     >
       {/* Renderiza el Modal */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen}>
         <RegisterForm />
       </Modal>
     </div>
