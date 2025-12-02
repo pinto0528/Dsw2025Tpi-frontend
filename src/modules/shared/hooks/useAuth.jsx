@@ -7,28 +7,40 @@ export const useAuth = () => {
   
   let isAdmin = false;
   let isLoggedIn = !!token;
-  let userId = null; // <--- Nuevo campo
+  let user = null;
 
   if (token) {
     try {
       const decoded = jwtDecode(token);
 
-      console.log("Decoded JWT:", decoded);
+      const userId = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] 
+                     || decoded.id 
+                     || decoded.uid;
 
-      userId = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+       const roleClaim = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decoded.role;
+      const roleString = Array.isArray(roleClaim) ? roleClaim.join(", ") : roleClaim;
 
-      const roleClaim = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decoded.role;
+      const username = decoded.sub || "Usuario";
 
       if (Array.isArray(roleClaim)) {
         isAdmin = roleClaim.includes("ADMIN");
       } else {
         isAdmin = roleClaim === "ADMIN";
       }
+
+      user = {
+        id: userId,
+        username: username,
+        role: roleString,
+        email: decoded.email || "No especificado", 
+        expiration: new Date(decoded.exp * 1000).toLocaleString() // Fecha de vencimiento de sesión
+      };
+
     } catch (error) {
       console.error("Token inválido", error);
       isLoggedIn = false;
       isAdmin = false;
-      userId = null;
+      user = null;
     }
   }
 
@@ -36,6 +48,5 @@ export const useAuth = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
-
-  return { isAdmin, isLoggedIn, userId, logout };
+return { isAdmin, isLoggedIn, user, logout };
 };
