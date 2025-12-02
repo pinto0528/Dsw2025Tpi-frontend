@@ -11,7 +11,7 @@ export function CartProvider({ children }) {
       const exists = prev.find((p) => p.sku === product.sku);
       if (exists) return prev;
 
-      return [...prev, product];
+      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
@@ -19,8 +19,19 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((p) => p.sku !== sku));
   };
 
+  const updateQuantity = (sku, newQuantity) => {
+    setCart((prev) => 
+      prev.map((item) => {
+        if (item.sku === sku) {
+           return { ...item, quantity: newQuantity };
+        }
+        return item;
+      })
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );

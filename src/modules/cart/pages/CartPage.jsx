@@ -7,22 +7,38 @@ import { useState, useMemo } from "react";
 import { useCart } from "../../../context/CartContext";
 
 function CartPage() {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, updateQuantity } = useCart();
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
-  // Calcular subtotal por producto y total
-  const { cartList, total } = useMemo(() => {
-    const cartList = cart.map((product) => ({
+  
+  const handleIncrement = (sku) => {
+    
+    const product = cart.find(p => p.sku === sku);
+    if(product) {
+        updateQuantity(sku, product.quantity + 1);
+    }
+  };
+
+  const handleDecrement = (sku) => {
+    const product = cart.find(p => p.sku === sku);
+    if(product && product.quantity > 1) {
+        updateQuantity(sku, product.quantity - 1);
+    }
+  };
+
+  
+  const { processedCart, total } = useMemo(() => {
+    const processedCart = cart.map((product) => ({
       ...product,
-      quantity: 1, // por ahora fijo, luego lo hacemos editable
-      subtotal: product.currentUnitPrice * 1,
+      quantity: product.quantity || 1, 
+      subtotal: product.currentUnitPrice * (product.quantity || 1),
     }));
 
-    const total = cartList.reduce((acc, p) => acc + p.subtotal, 0);
+    const total = processedCart.reduce((acc, p) => acc + p.subtotal, 0);
 
-    return { cartList, total };
+    return { processedCart, total };
   }, [cart]);
 
   return (
@@ -38,7 +54,7 @@ function CartPage() {
             </div>
 
             <div className="flex flex-col flex-1 bg-gray-100 rounded-t-lg p-4 shadow-sm overflow-y-auto gap-1">
-              {cartList.map((product) => (
+              {processedCart.map((product) => (
                 <CartProductCard
                   id={product.id}
                   sku={product.sku}
@@ -47,7 +63,8 @@ function CartPage() {
                   quantity={product.quantity}
                   price={product.currentUnitPrice}
                   subtotal={product.subtotal}
-                  onDelete={() => removeFromCart(product.sku)}
+                  onDelete={() => removeFromCart(product.sku)}onIncrement={() => handleIncrement(product.sku)}
+                  onDecrement={() => handleDecrement(product.sku)}
                 />
               ))}
             </div>

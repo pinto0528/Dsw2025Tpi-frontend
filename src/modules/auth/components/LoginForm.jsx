@@ -5,7 +5,8 @@ import { useState } from "react";
 import { login } from "../services/login";
 import { useNavigate } from "react-router-dom";
 
-// 1. ACEPTAR LA PROP onSuccess (que viene del Header como closeModal)
+import { jwtDecode } from "jwt-decode"; 
+
 function LoginForm({ onSuccess }) { 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -22,23 +23,42 @@ function LoginForm({ onSuccess }) {
       const response = await login(formData.username, formData.password);
       
       if (response.data) {
-        localStorage.setItem("token", response.data.token);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        
+        let userIsAdmin = false;
+        try {
+          const decoded = jwtDecode(token);
+          const roleClaim = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decoded.role;
+          
+          if (Array.isArray(roleClaim)) {
+            userIsAdmin = roleClaim.includes("ADMIN");
+          } else {
+            userIsAdmin = roleClaim === "ADMIN";
+          }
+        } catch (e) {
+          console.error("Error decodificando al loguear", e);
+        }
+
         
         if (onSuccess) {
           onSuccess();
+        }
+
+        
+        if (userIsAdmin) {
+           navigate("/admin");
         } else {
-          navigate("/main");
+           navigate("/main");
         }
         
       } else {
-        setErrorMessage(response.error.frontendErrorMessage);
+        setErrorMessage(response.error?.frontendErrorMessage || "Error desconocido");
       }
     } catch (error) {
       setErrorMessage(error.message);
     }
   };
-
-  
 
   const handleRegister = () => {
     if (onSuccess) onSuccess(); 
@@ -47,10 +67,7 @@ function LoginForm({ onSuccess }) {
 
   return (
     <form
-      className="
-        flex flex-col gap-2 bg-white p-8 rounded-lg shadow-lg
-        min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[600px]
-      "
+      className="flex flex-col gap-2 bg-white p-8 rounded-lg shadow-lg min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[600px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <p className="text-2xl font-bold pb-2">Iniciar Sesión</p>
