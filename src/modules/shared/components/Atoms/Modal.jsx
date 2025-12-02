@@ -17,7 +17,8 @@ function Modal({ isOpen, onClose, children }) {
       bg-black/50
       flex flex-col 
       justify-center 
-      items-center z-50"
+      items-center z-50
+      overflow-auto"
       
     >
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useCart } from "../../../context/CartContext";
+import { useCart } from "../../cart/context/CartContext";
 import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 
 function ProductCard({ product }) {

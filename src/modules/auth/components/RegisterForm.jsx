@@ -3,7 +3,9 @@ import InputShared from "../../shared/components/atoms/InputShared";
 import ButtonShared from "../../shared/components/Atoms/ButtonShared";
 import { useState } from "react";
 import { registerUser } from "../services/register";
-import { useNavigate } from "react-router-dom"; // Importamos para redirigir tras registro
+import { useNavigate } from "react-router-dom";
+
+const ADMIN_SECRET_KEY = "TPI2025"; 
 
 function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,12 +23,21 @@ function RegisterForm() {
       role: "", 
       password: "",
       confirmPassword: "",
+      adminSecret: "",
     },
   });
 
   const password = watch("password");
+  const selectedRole = watch("role"); 
 
   const onValid = async (formData) => {
+    if (formData.role === "ADMIN") {
+        if (formData.adminSecret !== ADMIN_SECRET_KEY) {
+            setErrorMessage("La clave maestra para crear Administradores es incorrecta.");
+            return;
+        }
+    }
+
     try {
       const payload = {
         username: formData.username,
@@ -35,16 +46,13 @@ function RegisterForm() {
         role: formData.role.toUpperCase()
       };
 
-      // 2. LLAMAR AL SERVICIO
       const { data, error } = await registerUser(payload);
 
       if (error) {
-        // Manejo de errores que vienen del backend
         setErrorMessage(error.frontendErrorMessage || "Error en el registro");
         return;
       }
 
-      // 3. ÉXITO
       console.log(data);
       alert("Usuario registrado con éxito");
       navigate("/");
@@ -58,78 +66,114 @@ function RegisterForm() {
   return (
     <div>
       <form
-        className="flex flex-col gap-2 bg-white p-8 rounded-lg shadow-lg
-        min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[600px]"
+        className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 bg-white p-6 rounded-lg shadow-lg
+        min-w-[300px] w-[100dvw] sm:w-[70dvw] md:w-[60dvw] lg:w-[50dvw] max-w-[700px]"
         onSubmit={handleSubmit(onValid)}
       >
-        <p className="text-2xl font-bold pb-2">Registro de Usuario</p>
+        <p className="text-2xl font-bold pb-2 md:col-span-2 text-center md:text-left">
+          Registro de Usuario
+        </p>
 
-        <InputShared
-          label="Usuario"
-          {...register("username", { required: "Usuario es obligatorio" })}
-          error={errors.username?.message}
-        />
+        {/* 1. USUARIO: Ocupa las 2 columnas (ancho completo) */}
+        <div className="md:col-span-2">
+            <InputShared
+                label="Usuario"
+                {...register("username", { required: "Usuario es obligatorio" })}
+                error={errors.username?.message}
+            />
+        </div>
 
-        <InputShared
-          label="Email"
-          type="email"
-          {...register("email", {
-            required: "Email es obligatorio",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Email no válido",
-            },
-          })}
-          error={errors.email?.message}
-        />
+        {/* 2. EMAIL: Ocupa las 2 columnas (ancho completo) */}
+        <div className="md:col-span-2">
+            <InputShared
+                label="Email"
+                type="email"
+                {...register("email", {
+                    required: "Email es obligatorio",
+                    pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Email no válido",
+                    },
+                })}
+                error={errors.email?.message}
+            />
+        </div>
 
-        <div className="flex flex-col h-20">
-          <label>Role:</label>
+        {/* 3. ROL: Ocupa 1 columna (o 2 si no hay clave maestra y quieres que se estire) */}
+        {/* Aquí lo dejo en 1 columna para que haga espacio a la clave maestra si aparece */}
+        <div className={`flex flex-col ${selectedRole === 'ADMIN' ? '' : 'md:col-span-2'}`}>
+          <label className="mb-1 text-sm font-medium text-gray-700">Role:</label>
           <select
-            className={`border rounded p-2 ${errors.role ? "border-red-400" : "border-gray-300"}`}
+            className={`border rounded p-2 h-[42px] ${errors.role ? "border-red-400" : "border-gray-300"}`}
             {...register("role", {
               required: "Debe seleccionar un role",
             })}
           >
             <option value="">Seleccione una opción</option>
-            <option value="ADMIN">Admin</option>
             <option value="CLIENT">Client</option> 
+            <option value="ADMIN">Admin</option>
           </select>
           
           {errors.role && (
-            <p className="text-red-500 text-base sm:text-xs">
+            <p className="text-red-500 text-xs mt-1">
               {errors.role.message}
             </p>
           )}
         </div>
 
+        {/* 4. CLAVE MAESTRA: Aparece al lado del Rol (columna 2) */}
+        {selectedRole === "ADMIN" && (
+            <div className="animate-fade-in">
+                <InputShared
+                    label="Clave Maestra"
+                    type="password"
+                    placeholder="Clave de autorización"
+                    {...register("adminSecret", {
+                        required: "Requerido para Admin"
+                    })}
+                    error={errors.adminSecret?.message}
+                    className="bg-yellow-50 border-yellow-200 focus:border-yellow-400"
+                />
+            </div>
+        )}
+
+        {/* 5. CONTRASEÑAS: Comparten fila (1 columna cada una) */}
         <InputShared
           label="Contraseña"
           type="password"
           {...register("password", {
-            required: "Contraseña es obligatoria",
+            required: "Obligatoria",
             minLength: {
               value: 6,
-              message: "La contraseña debe tener al menos 6 caracteres",
+              message: "Mínimo 6 caracteres",
             },
           })}
           error={errors.password?.message}
         />
 
         <InputShared
-          label="Confirmar contraseña"
+          label="Confirmar"
           type="password"
           {...register("confirmPassword", {
-            required: "Debe confirmar la contraseña",
+            required: "Requerido",
             validate: (value) =>
-              value === password || "Las contraseñas no coinciden",
+              value === password || "No coinciden",
           })}
           error={errors.confirmPassword?.message}
         />
 
-        <ButtonShared type="submit">Registrar</ButtonShared>
+        {/* BOTÓN: Ancho completo */}
+        <div className="md:col-span-2 mt-2">
+            <ButtonShared type="submit" className="w-full">
+                Registrar
+            </ButtonShared>
 
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {errorMessage && (
+                <p className="text-red-500 font-bold text-center mt-2 text-sm">
+                    {errorMessage}
+                </p>
+            )}
+        </div>
       </form>
     </div>
   );

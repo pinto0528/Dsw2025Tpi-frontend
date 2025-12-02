@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts } from "../services/products";
 import { getAllOrders } from "../services/orders";
+import SetAdminKey from "../components/SetAdminKey";
 
 const DashboardPage = () => {
   // 1. Ampliamos el estado para guardar las nuevas métricas
@@ -99,9 +100,15 @@ const DashboardPage = () => {
               ${stats.averageTicket.toFixed(2)}
             </p>
           </div>
-
         </div>
       )}
+
+      
+
+          {/* PANEL DE SEGURIDAD */}
+          <div className="mt-8">
+              <SetAdminKey />
+          </div>
     </div>
   );
 };

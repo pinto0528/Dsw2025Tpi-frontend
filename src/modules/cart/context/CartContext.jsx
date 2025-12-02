@@ -1,16 +1,28 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  // 1. Inicializar estado leyendo LocalStorage
+  const [cart, setCart] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem("shoppingCart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      console.error("Error al leer el carrito:", error);
+      return [];
+    }
+  });
+
+  // 2. Guardar en LocalStorage cada vez que cambie el carrito
+  useEffect(() => {
+    localStorage.setItem("shoppingCart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product) => {
     setCart((prev) => {
-      // evitar duplicados
       const exists = prev.find((p) => p.sku === product.sku);
       if (exists) return prev;
-
       return [...prev, { ...product, quantity: 1 }];
     });
   };
@@ -30,8 +42,12 @@ export function CartProvider({ children }) {
     );
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

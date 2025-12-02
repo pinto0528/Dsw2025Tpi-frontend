@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../../shared/components/Header";
 import Sidebar from "../../shared/components/Sidebar";
 import ProductCard from "../components/ProductCard";
-import { getAllProducts } from "../../admin/services/products"; // Reutilizamos el servicio
+import { getAllProducts } from "../../admin/services/products";
 
 const MainPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

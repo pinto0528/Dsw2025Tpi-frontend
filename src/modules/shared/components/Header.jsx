@@ -11,7 +11,7 @@ import ButtonShared from "./Atoms/ButtonShared";
 
 
 import { useAuth } from "../../shared/hooks/useAuth"; 
-import { useCart } from "../../../context/CartContext";
+import { useCart } from "../../cart/context/CartContext";
 
 const Header = ({ onMenuClick }) => {
   const navigate = useNavigate();
